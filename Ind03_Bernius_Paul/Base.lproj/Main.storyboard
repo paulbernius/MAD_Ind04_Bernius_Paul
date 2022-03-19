@@ -87,7 +87,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="BYZ-38-t0r" kind="show" id="Qs2-3F-zE8"/>
+                                    <segue destination="BYZ-38-t0r" kind="show" identifier="mySegue" id="Qs2-3F-zE8"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -96,6 +96,9 @@
                             <outlet property="delegate" destination="qLV-Wo-Thd" id="Imt-Dw-kPR"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="myTableView" destination="wUO-jJ-RM8" id="gQr-q9-Dso"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6kD-Oc-BES" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
