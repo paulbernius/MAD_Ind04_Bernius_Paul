@@ -9,7 +9,10 @@ import UIKit
 
 class TableViewController: UITableViewController {
     
+    //@IBOutlet var myTableView: UITableView!
+    
     @IBOutlet var myTableView: UITableView!
+    
     
     var flag = ""
     var map = ""
