@@ -11,18 +11,16 @@ class TableViewController: UITableViewController {
     
     @IBOutlet var myTableView: UITableView!
     
-    
-    
     var flag = ""
     var map = ""
     var name = ""
-    var sqmiles = ""
+    var sqMiles = ""
     
     let stateNames = ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"]
     
     let stateNickNames = ["The Yellowhammer State", "The Last Frontier", "The Grand Canyon State", "The Natural State", "The Golden State", "The Centennial State", "The Constitution State", "The First State", "The Sunshine State", "The Peach State", "The Aloha State", "The Gem State", "Prairie State", "The Hoosier State", "The Hawkeye State", "The Sunflower State", "The Bluegrass State", "The Pelican State", "The Pine Tree State", "The Old Line State", "The Bay State", "The Great Lakes State", "The North Star State", "The Magnolia State", "The Show Me State", "The Treasure State", "The Cornhusker State", "The Silver State", "The Granite State", "The Garden State", "The Land of Enchantment", "The Empire State", "The Tar Heel State", "The Peace Garden State", "The Buckeye State", "The Sooner State", "The Beaver State", "The Keystone State", "The Ocean State", "The Palmetto State", "Mount Rushmore State", "The Volunteer State", "The Lone Star State", "The Beehive State", "The Green Mountain State", "The Old Dominion State", "The Evergreen State", "The Mountain State", "The Badger State", "The Equality or Cowboy State"]
     
-    let stateSquareMiles = ["100", "100"]
+    let stateSquareMiles = ["50,744", "571,951", "113,635", "52,068", "155,959", "103,718", "4,845", "1,954", "53,927", "57,906", "6,423", "82,747", "55,584", "35,867", "55,869", "81,815", "39,728", "43,562", "30,862", "9,774", "7,840", "56,804", "79,610", "46,907", "68,886", "145,552", "76,872", "109,826", "8,968", "7,417", "121,356", "47,214", "48,711", "68,976", "40,948", "68,667", "95,997", "44,817", "1,045", "30,109", "75,885", "41,217", "261,797", "82,144", "9,250", "39,594", "66,544", "24,078", "54,310", "97,100"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -103,23 +101,23 @@ class TableViewController: UITableViewController {
         let selectDestination = segue.destination as! ViewController
         let flagKeyword = "-Flag"
         let mapKeyWord = "-Map"
+        let sqMilesKeyword = "sq. Miles"
         
         
         
         let tempIndexPath = myTableView.indexPathForSelectedRow
         let index = tempIndexPath?.item
-        print(index!)
         
         name = stateNames[index!]
         flag = name + flagKeyword
-        print(flag)
         map = name + mapKeyWord
-        print(map)
+        
+        
         
         
         selectDestination.myFlag = flag
         selectDestination.myMap = map
         selectDestination.myStateName = name
-        selectDestination.mySquareMiles = "100"
+        selectDestination.mySquareMiles = stateSquareMiles[index!] + " sq. Miles"
     }
 }
