@@ -296,6 +296,7 @@
 				DEVELOPMENT_TEAM = 899G945D6A;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Ind03_Bernius_Paul/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Ind03_Bernius_Paul;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -324,6 +325,7 @@
 				DEVELOPMENT_TEAM = 899G945D6A;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Ind03_Bernius_Paul/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Ind03_Bernius_Paul;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
