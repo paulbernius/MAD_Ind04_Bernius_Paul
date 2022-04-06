@@ -9,50 +9,81 @@ import UIKit
 
 class TableViewController: UITableViewController {
     
+    /*
+     
+     Some code in this project is from Individual 03.
+     I understand we should not segue to the new screen
+     so I removed the segue but kept the data.
+     I removed the assests from the folder to reduce
+     the file size but the code still exists as comments.
+     
+     Most of the code remains the same besides the "viewDidLoad"
+     method and Util.swift file.
+     
+     Util.swift file handles the spinner. The traditional
+     activity spinner did not work well with the table view.
+     This spinner is able to be handled on all view controllers
+     and looks cleaner.
+    
+    */
+    
+    
     // Create outlet to later determine which cell was pressed
     @IBOutlet var myTableView: UITableView!
     
+    // Initialize arrays to hold parsed data
     var stateNames = [String]()
     var stateNickNames = [String]()
 
     override func viewDidLoad() {
+        
+        // Call showSpinner method from Util.swift once view has loaded
         self.showSpinner()
+        
         super.viewDidLoad()
         
+        // Define a struct to hold parsed data
         struct JSONSTATES: Decodable {
             let name: String
             let nickname: String
         }
         
+        // Url string to JSON data
         let urlString = "https://cs.okstate.edu/~pberniu/dbcontroller.php"
         
+        // If string is invalid, print error
         guard let url = URL(string: urlString) else {
             print("Invalid URL")
             return
         }
         
+        // Start connecting to database
+        // Send URL request and retrieve data, response, and error if applicable
         let task = URLSession.shared.dataTask(with: url) {
             (data, response, error) in
-            if error == nil && data != nil {
+            if error == nil && data != nil { // If no error is found, and data exists, parse the data
                 do {
-                    let jsonStates = try JSONDecoder().decode([JSONSTATES].self, from: data!)
+                    let jsonStates = try JSONDecoder().decode([JSONSTATES].self, from: data!) // Decodes all retrieved data into struct
                     
-                    for JSONSTATES in jsonStates {
+                    for JSONSTATES in jsonStates { // For loop to take data from struct and insert into array
                         self.stateNames.append(JSONSTATES.name)
                         self.stateNickNames.append(JSONSTATES.nickname)
                     }
                     
+                    // Reload table view data with new data
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
+                        // Stop the spinner since data has been parsed
                         self.removeSpinner()
                     }
                     
-                } catch {
+                } catch { // Catch clause for do statement. Catches error while parsing JSON
                     print("Error in JSON parsing")
                 }
             }
         }
         
+        // Start the parsing
         task.resume()
 
         // Uncomment the following line to preserve selection between presentations
