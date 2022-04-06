@@ -9,25 +9,88 @@ import UIKit
 
 class TableViewController: UITableViewController {
     
+    
+    
     // Create outlet to later determine which cell was pressed
     @IBOutlet var myTableView: UITableView!
     
-    @IBOutlet weak var myActivityIndicator: UIActivityIndicatorView!
     
-    
-    // Data source containing all state names in alphabetical order
-    let stateNames = ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"]
-    
-    // Data source containing all state nick names corresponding to "stateNames" order
-    let stateNickNames = ["The Yellowhammer State", "The Last Frontier", "The Grand Canyon State", "The Natural State", "The Golden State", "The Centennial State", "The Constitution State", "The First State", "The Sunshine State", "The Peach State", "The Aloha State", "The Gem State", "Prairie State", "The Hoosier State", "The Hawkeye State", "The Sunflower State", "The Bluegrass State", "The Pelican State", "The Pine Tree State", "The Old Line State", "The Bay State", "The Great Lakes State", "The North Star State", "The Magnolia State", "The Show Me State", "The Treasure State", "The Cornhusker State", "The Silver State", "The Granite State", "The Garden State", "The Land of Enchantment", "The Empire State", "The Tar Heel State", "The Peace Garden State", "The Buckeye State", "The Sooner State", "The Beaver State", "The Keystone State", "The Ocean State", "The Palmetto State", "Mount Rushmore State", "The Volunteer State", "The Lone Star State", "The Beehive State", "The Green Mountain State", "The Old Dominion State", "The Evergreen State", "The Mountain State", "The Badger State", "The Equality or Cowboy State"]
-    
-    // Data source containing the state's area correspondign to "stateNames" order
-    let stateSquareMiles = ["50,744", "571,951", "113,635", "52,068", "155,959", "103,718", "4,845", "1,954", "53,927", "57,906", "6,423", "82,747", "55,584", "35,867", "55,869", "81,815", "39,728", "43,562", "30,862", "9,774", "7,840", "56,804", "79,610", "46,907", "68,886", "145,552", "76,872", "109,826", "8,968", "7,417", "121,356", "47,214", "48,711", "68,976", "40,948", "68,667", "95,997", "44,817", "1,045", "30,109", "75,885", "41,217", "261,797", "82,144", "9,250", "39,594", "66,544", "24,078", "54,310", "97,100"]
+    var stateNames = [String]()
+    var stateNickNames = [String]()
 
     override func viewDidLoad() {
+        
+        self.showSpinner()
         super.viewDidLoad()
         
-        myActivityIndicator.startAnimating()
+        
+
+        struct JSONSTATES: Decodable {
+            let name: String
+            let nickname: String
+            /*
+            enum CodingKeys: String, CodingKey {
+                    case name
+                    case nickname
+            }
+            
+            init(from decoder: Decoder) throws {
+                let container = try decoder.container(keyedBy: CodingKeys.self)
+                name = try container.decodeIfPresent(String.self, forKey: .name)!
+                nickname = try container.decodeIfPresent(String.self, forKey: .nickname)!
+            }*/
+        }
+        
+        
+        
+        let urlString = "https://cs.okstate.edu/~pberniu/dbcontroller.php"
+        //let urlString = "https://cs.okstate.edu/~kquinto/states.php"
+        
+        guard let url = URL(string: urlString) else {
+            print("Invalid URL")
+            return
+        }
+        
+        let task = URLSession.shared.dataTask(with: url) {
+            (data, response, error) in
+            if error == nil && data != nil {
+                //print("URL Session error: \(error!)")
+                //return
+                
+                do {
+                    let jsonStates = try JSONDecoder().decode([JSONSTATES].self, from: data!)
+                    //print(jsonStates)
+                    for JSONSTATES in jsonStates {
+                        
+                        
+                        self.stateNames.append(JSONSTATES.name)
+                        self.stateNickNames.append(JSONSTATES.nickname)
+                    }
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                        self.removeSpinner()
+                    }
+                } catch {
+                    print("Error in JSON parsing")
+                }
+            }
+            /*
+            guard let data = data else {
+                print("No data received")
+                return
+            }
+            print(data)
+            
+            
+            do {
+                let json = try JSONDecoder().decode([JSONSTATES].self, from: data)
+                print(json)
+            } catch let error as NSError {
+                print("Error serializing JSON Data: \(error)")
+            }*/
+        }
+        
+        task.resume()
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -57,8 +120,10 @@ class TableViewController: UITableViewController {
         // Get cell titles & subtitles from data arrays
         cell.textLabel?.text = stateNames[indexPath[1]]
         cell.detailTextLabel?.text = stateNickNames[indexPath[1]]
-
+        
         return cell
+        
+        
     }
     
 
@@ -133,6 +198,6 @@ class TableViewController: UITableViewController {
         selectDestination.myFlag = flag
         selectDestination.myMap = map
         selectDestination.myStateName = name
-        selectDestination.mySquareMiles = stateSquareMiles[index!] + " sq. Miles"
+        //selectDestination.mySquareMiles = stateSquareMiles[index!] + " sq. Miles"
     }
 }
