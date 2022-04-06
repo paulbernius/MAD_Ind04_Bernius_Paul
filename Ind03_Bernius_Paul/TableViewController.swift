@@ -9,42 +9,22 @@ import UIKit
 
 class TableViewController: UITableViewController {
     
-    
-    
     // Create outlet to later determine which cell was pressed
     @IBOutlet var myTableView: UITableView!
-    
     
     var stateNames = [String]()
     var stateNickNames = [String]()
 
     override func viewDidLoad() {
-        
         self.showSpinner()
         super.viewDidLoad()
         
-        
-
         struct JSONSTATES: Decodable {
             let name: String
             let nickname: String
-            /*
-            enum CodingKeys: String, CodingKey {
-                    case name
-                    case nickname
-            }
-            
-            init(from decoder: Decoder) throws {
-                let container = try decoder.container(keyedBy: CodingKeys.self)
-                name = try container.decodeIfPresent(String.self, forKey: .name)!
-                nickname = try container.decodeIfPresent(String.self, forKey: .nickname)!
-            }*/
         }
         
-        
-        
         let urlString = "https://cs.okstate.edu/~pberniu/dbcontroller.php"
-        //let urlString = "https://cs.okstate.edu/~kquinto/states.php"
         
         guard let url = URL(string: urlString) else {
             print("Invalid URL")
@@ -54,40 +34,23 @@ class TableViewController: UITableViewController {
         let task = URLSession.shared.dataTask(with: url) {
             (data, response, error) in
             if error == nil && data != nil {
-                //print("URL Session error: \(error!)")
-                //return
-                
                 do {
                     let jsonStates = try JSONDecoder().decode([JSONSTATES].self, from: data!)
-                    //print(jsonStates)
+                    
                     for JSONSTATES in jsonStates {
-                        
-                        
                         self.stateNames.append(JSONSTATES.name)
                         self.stateNickNames.append(JSONSTATES.nickname)
                     }
+                    
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
                         self.removeSpinner()
                     }
+                    
                 } catch {
                     print("Error in JSON parsing")
                 }
             }
-            /*
-            guard let data = data else {
-                print("No data received")
-                return
-            }
-            print(data)
-            
-            
-            do {
-                let json = try JSONDecoder().decode([JSONSTATES].self, from: data)
-                print(json)
-            } catch let error as NSError {
-                print("Error serializing JSON Data: \(error)")
-            }*/
         }
         
         task.resume()
@@ -171,6 +134,9 @@ class TableViewController: UITableViewController {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
         
+        
+        // OLD CODE vvvv FROM INDIVIDUAL 03
+        /*
         // Assign "selectDestination" to the destination view controller
         let selectDestination = segue.destination as! ViewController
         
@@ -198,6 +164,7 @@ class TableViewController: UITableViewController {
         selectDestination.myFlag = flag
         selectDestination.myMap = map
         selectDestination.myStateName = name
-        //selectDestination.mySquareMiles = stateSquareMiles[index!] + " sq. Miles"
+        selectDestination.mySquareMiles = stateSquareMiles[index!] + " sq. Miles"
+        */
     }
 }
