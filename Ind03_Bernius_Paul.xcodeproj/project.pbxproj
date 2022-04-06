@@ -44,7 +44,6 @@
 		2C69EA0F27E6654500C6D50B = {
 			isa = PBXGroup;
 			children = (
-				2CA7591E27FD277200F1D341 /* Util.swift */,
 				2C69EA1A27E6654500C6D50B /* Ind03_Bernius_Paul */,
 				2C69EA1927E6654500C6D50B /* Products */,
 			);
@@ -61,6 +60,7 @@
 		2C69EA1A27E6654500C6D50B /* Ind03_Bernius_Paul */ = {
 			isa = PBXGroup;
 			children = (
+				2CA7591E27FD277200F1D341 /* Util.swift */,
 				2C69EA1B27E6654500C6D50B /* AppDelegate.swift */,
 				2C69EA1D27E6654500C6D50B /* SceneDelegate.swift */,
 				2C69EA1F27E6654500C6D50B /* ViewController.swift */,
