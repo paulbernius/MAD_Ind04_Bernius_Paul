@@ -9,7 +9,6 @@ import UIKit
 
 class TableViewController: UITableViewController {
     
-    
     /*
      
      Some code in this project is from Individual 03.
@@ -27,7 +26,6 @@ class TableViewController: UITableViewController {
      and looks cleaner.
     
     */
-    
     
     // Create outlet to later determine which cell was pressed
     @IBOutlet var myTableView: UITableView!
